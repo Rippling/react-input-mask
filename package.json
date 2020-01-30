@@ -1,7 +1,7 @@
 {
   "name": "react-input-mask",
   "description": "Masked input component for React",
-  "version": "3.0.0-alpha.2",
+  "version": "3.0.0-alpha.3",
   "homepage": "https://github.com/sanniassin/react-input-mask",
   "license": "MIT",
   "author": "Nikita Lobachev <sanniassin@gmail.com>",
@@ -80,7 +80,7 @@
   },
   "scripts": {
     "clean": "rimraf lib dist",
-    "build": "cross-env BABEL_ENV=rollup rollup -c",
+    "build:lib": "cross-env BABEL_ENV=rollup rollup -c",
     "start": "cross-env BABEL_ENV=test NODE_ENV=development webpack-dev-server",
     "prepare": "npm run lint && npm test && npm run clean && npm run build",
     "lint": "eslint ./src ./tests ./*.js",

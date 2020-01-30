@@ -62,7 +62,7 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
     setInputState(newInputState);
 
     if (props.onChange) {
-      props.onChange(event);
+      props.onChange(event, newInputState);
     }
   }
 
@@ -71,11 +71,12 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
     inputRef.current = event.target;
 
     const currentValue = getInputState().value;
+    let newInputState;
 
     if (isMasked && !maskUtils.isValueFilled(currentValue)) {
       let newValue = maskUtils.formatValue(currentValue);
       let newSelection = maskUtils.getDefaultSelectionForValue(newValue);
-      let newInputState = {
+      newInputState = {
         value: newValue,
         selection: newSelection
       };
@@ -92,7 +93,7 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
       setInputState(newInputState);
 
       if (newValue !== currentValue && props.onChange) {
-        props.onChange(event);
+        props.onChange(event, newInputState);
       }
 
       // Chrome resets selection after focus event,
@@ -103,17 +104,18 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
     }
 
     if (props.onFocus) {
-      props.onFocus(event);
+      props.onFocus(event, newInputState);
     }
   }
 
   function onBlur(event) {
     const currentValue = getInputState().value;
     const lastValue = getLastInputState().value;
+    let newInputState;
 
     if (isMasked && !alwaysShowMask && maskUtils.isValueEmpty(lastValue)) {
       let newValue = "";
-      let newInputState = {
+      newInputState = {
         value: newValue,
         selection: { start: null, end: null }
       };
@@ -129,12 +131,12 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
       setInputState(newInputState);
 
       if (newValue !== currentValue && props.onChange) {
-        props.onChange(event);
+        props.onChange(event, newInputState);
       }
     }
 
     if (props.onBlur) {
-      props.onBlur(event);
+      props.onBlur(event, newInputState);
     }
   }
 
