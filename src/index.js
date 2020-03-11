@@ -22,6 +22,7 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
     mask,
     maskPlaceholder,
     beforeMaskedStateChange,
+    shouldSkipInitialFormatting,
     ...restProps
   } = props;
 
@@ -196,7 +197,7 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
     const input = getInputElement();
     const isFocused = input && isInputFocused(input);
     let newValue =
-      isFocused || alwaysShowMask || props.value
+      !shouldSkipInitialFormatting && (isFocused || alwaysShowMask || props.value)
         ? maskUtils.formatValue(props.value)
         : props.value;
 
@@ -296,7 +297,8 @@ InputMask.displayName = "InputMask";
 
 InputMask.defaultProps = {
   alwaysShowMask: false,
-  maskPlaceholder: "_"
+  maskPlaceholder: "_",
+  shouldSkipInitialFormatting: false
 };
 
 InputMask.propTypes = {
@@ -313,7 +315,8 @@ InputMask.propTypes = {
   onFocus: PropTypes.func,
   onBlur: PropTypes.func,
   onChange: PropTypes.func,
-  onMouseDown: PropTypes.func
+  onMouseDown: PropTypes.func,
+  shouldSkipInitialFormatting: PropTypes.bool
 };
 
 export default InputMask;
