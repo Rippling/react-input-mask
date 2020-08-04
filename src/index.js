@@ -197,7 +197,8 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
     const input = getInputElement();
     const isFocused = input && isInputFocused(input);
     let newValue =
-      !shouldSkipInitialFormatting && (isFocused || alwaysShowMask || props.value)
+      !shouldSkipInitialFormatting &&
+      (isFocused || alwaysShowMask || props.value)
         ? maskUtils.formatValue(props.value)
         : props.value;
 
@@ -264,6 +265,16 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
     setInputState(newInputState);
   });
 
+  /**
+   * @rippling
+   */
+  let valueProp = isMasked && isControlled ? { value: lastValue } : undefined;
+
+  if (!valueProp && Object.prototype.hasOwnProperty.call(props, "value")) {
+    valueProp = { value: props.value };
+  }
+  /** */
+
   const inputProps = {
     ...restProps,
     onFocus,
@@ -279,7 +290,7 @@ const InputMask = forwardRef(function InputMask(props, forwardedRef) {
         forwardedRef.current = ref;
       }
     },
-    value: isMasked && isControlled ? lastValue : props.value
+    ...valueProp
   };
 
   if (children) {
